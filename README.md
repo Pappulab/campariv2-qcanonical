@@ -44,3 +44,17 @@ If you use this version of CAMPARI for published scientific research, please cit
   publisher={ACS Publications}
 }
 ```
+
+Similarly, the BibTeX entry for CAMPARI is:
+
+```
+@article{vitalis2009methods,
+  title={Methods for Monte Carlo simulations of biomacromolecules},
+  author={Vitalis, Andreas and Pappu, Rohit V},
+  journal={Annual reports in computational chemistry},
+  volume={5},
+  pages={49--76},
+  year={2009},
+  publisher={Elsevier}
+}
+```
