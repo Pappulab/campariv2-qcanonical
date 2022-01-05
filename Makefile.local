@@ -1,0 +1,38 @@
+# Makefile.local (distributed by CVS as Makefile.local-dist)
+# If Makefile.local does not exist, do,
+#  cp Makefile.local-dist Makefile.local
+# Only changes which should be propagated back into CVS should be made in
+# Makefile.local-dist.
+# Please make any locale-specific modifications here.
+CAMPARI_HOME=/project/fava/work/martinfossat/Hacked_Campari/HS-PKA-inprogress
+#/project/fava/scratch/HS-PKA-inprogress2
+
+SRC_DIR=${CAMPARI_HOME}/source
+NETCDF_DIR=/project/fava/previous-packages/netcdf
+FFTW_DIR=/project/fava/previous-packages/fftw/fftw-3.3
+XDR_DIR=/project/fava/previous-packages/xdr
+
+ARCH=x86_64
+BIN_DIR=${CAMPARI_HOME}/bin
+LIB_DIR=${CAMPARI_HOME}/lib
+FF=ifort 
+#-xSSE3 is the last of the flags
+FFLAGS=-DDISABLE_FLOAT -DLINK_XDR -DLINK_FFTW -DLINK_NETCDF -I${NETCDF_DIR}/include -I${LIB_DIR}/${ARCH} -axSSE3 -xSSE3  -traceback -check all -O0 -fno-inline -no-ip -g -traceback -fp-model precise -implicitnone -warn interfaces #-traceback -gen-interface -debug extended -assume ieee_fpe_flags -fpe1 -debug all -ftrapuv -assume ieee_fpe_flags -fpe0 #-check all 
+
+# LFLAGS=-O3 -static -i-static
+# #-g -debug extended -debug-parameters all 
+# -msse3 -axSSE4.1 -ipo
+# -static -i-static 
+
+EXTRA_LIBS=${XDR_DIR}/xdrf/libxdrf.a ${FFTW_DIR}/lib/libfftw3.a ${NETCDF_DIR}/lib/libnetcdff.a ${NETCDF_DIR}/lib/libnetcdf.a -lsvml -ltirpc
+
+#ony keep the mpif90 flag
+MPIFF=mpiifort -traceback  -check uninit  -check all -gen-interface  -assume ieee_fpe_flags -debug all #-debug extended #-assume ieee_fpe_flags # -check uninit  -check all#-fpe0 #-fpe1 -check uninit -g -debug all -ftrapuv -fpe1 -assume ieee_fpe_flags -fpe0 -debug extended -check all  # -check bounds  -check all 
+
+MPIFFLAGS=-fpp -DDISABLE_FLOAT -DLINK_XDR -DLINK_FFTW -DLINK_NETCDF -I${NETCDF_DIR}/include -I${LIB_DIR}/${ARCH} -axSSE3 -xSSE3
+MPILFLAGS=-O3 
+# -static  -i-static
+MPIEXTRA_LIBS=${XDR_DIR}/xdrf/libxdrf.a ${FFTW_DIR}/lib/libfftw3.a ${NETCDF_DIR}/lib/libnetcdff.a ${NETCDF_DIR}/lib/libnetcdf.a -lsvml -ltirpc
+#MPIEXTRA_LIBS=-lxtcf ${FFTW_DIR}/lib/libfftw3.a ${NETCDF_DIR}/lib/libnetcdff.a ${NETCDF_DIR}/lib/libnetcdf.a -lsvml
+# COMPDEFAULTS=${INTELDEBUG}
+COMPDEFAULTS=${INTELDEFAULTS}
